@@ -8,17 +8,17 @@ import javax.persistence.*;
  * Created by hifdong on 16/1/9.
  */
 
-//@Entity
-//@Table(name = "USER")
+@Entity
+@Table(name = "USER")
 public class User {
     private Long id;
     private String userName;
     private String password;
 
 
-//    @Id
-//    @GeneratedValue(generator = "increment")
-//    @GenericGenerator(name = "increment", strategy="increment")
+    @Id
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy="increment")
     public Long getId() {
         return id;
     }
@@ -27,7 +27,7 @@ public class User {
         this.id = id;
     }
 
-//    @Column(name="USER_NAME")
+    @Column(name="USER_NAME")
     public String getUserName() {
         return userName;
     }
@@ -36,7 +36,7 @@ public class User {
         this.userName = userName;
     }
 
-//    @Column(name="USER_PASSWORD")
+    @Column(name="USER_PASSWORD")
     public String getPassword() {
         return password;
     }

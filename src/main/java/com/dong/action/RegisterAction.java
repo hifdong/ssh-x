@@ -4,6 +4,7 @@ import com.dong.model.User;
 import com.dong.service.UserService;
 import com.opensymphony.xwork2.ActionSupport;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,22 +16,33 @@ public class RegisterAction extends ActionSupport {
     private String userName;
     private String password;
     private UserService userService;
+    private User user;
 
     public String execute() {
         userName=this.getUserName();
         password = this.getPassword();
         Map<String, Object> paramMap = new HashMap<String, Object>();
+        List<User> userList = new ArrayList<User>();
         try {
-            List<User> userList = userService.queryUserList(paramMap);
+            userList = userService.queryUserList(paramMap);
             System.out.print(userList.size());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (userName.equals("dong") && password.equals("dong")) {
+        boolean isAuth = false;
+        for (int i = 0; i < userList.size(); i++) {
+            if (userName != null && userName.length() > 0 && userName.equals(userList.get(i).getUserName())
+                    && password != null && password.length() > 0 && password.equals(userList.get(i).getPassword())) {
+                isAuth = true;
+                break;
+            }
+        }
+        if (isAuth) {
             return SUCCESS;
         } else {
             return INPUT;
         }
+
 
     }
 
@@ -56,5 +68,13 @@ public class RegisterAction extends ActionSupport {
 
     public void setUserService(UserService userService) {
         this.userService = userService;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

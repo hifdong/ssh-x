@@ -3,6 +3,7 @@ package com.dong.daoImpl;
 import com.dong.dao.UserDao;
 import com.dong.model.User;
 import com.dong.util.HibernateUtil;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -23,12 +24,18 @@ public class UserDaoImpl implements UserDao {
     }
 
     public List<User> queryUserList(Map<String, Object> paramMap) {
-        StringBuffer hql = new StringBuffer("from user u ");
+        StringBuffer hql = new StringBuffer("from User u ");
 
         Session session = sessionFactory.openSession();
         Query query = session.createQuery(hql.toString());
         List<User> userList = query.list();
-        session.close();
+        try {
+
+            session.close();
+
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
         return userList;
 
     }
